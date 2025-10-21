@@ -1,0 +1,22 @@
+﻿@page "/counter"
+
+<h1>Counter</h1>
+
+<p>Current count: @count</p>
+<button @onclick="IncrementCount">Click me</button>
+
+<hr />
+
+<h2>Mini Form Demo</h2>
+<input @bind="name" placeholder="Enter your name" />
+<button @onclick="Submit">Submit</button>
+<p>@message</p>
+
+@code {
+    int count;
+    string name = "";
+    string message = "";
+
+    void IncrementCount() => count++;
+    void Submit() => message = string.IsNullOrWhiteSpace(name) ? "Please enter a name." : $"Hello, {name}!";
+}
