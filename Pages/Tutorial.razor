@@ -1,11 +1,59 @@
 @page "/tutorial"
 
-<h1>Blazor Tutorial (1-hour intro)</h1>
-<ol>
-  <li>Install .NET 8</li>
-  <li>dotnet new blazorwasm</li>
-  <li>Run: dotnet run</li>
-  <li>Edit Counter.razor and add an input</li>
-  <li>Build and deploy to GitHub Pages</li>
-</ol>
-<p>See README for full step-by-step with commands.</p>
+<h1>Blazor Tutorial</h1>
+
+<h2>Prerequisites</h2>
+<ul>
+  <li>.NET 8 SDK</li>
+  <li>GitHub account</li>
+</ul>
+
+<h2>1. Create the app</h2>
+<pre><code>dotnet new blazorwasm -n BlazorDemo -f net8.0
+cd BlazorDemo
+dotnet run
+</code></pre>
+
+<h2>2. Edit a component</h2>
+<p>Open <code>Pages/Counter.razor</code> and replace its contents:</p>
+<pre><code>@@page "/counter"
+
+<h1>Counter</h1>
+
+<p>Current count: @count</p>
+<button @onclick="Inc">Click me</button>
+
+<hr />
+
+<h2>Mini Form</h2>
+<input @bind="name" placeholder="Enter your name" />
+<button @onclick="Submit">Submit</button>
+<p>@message</p>
+
+@code {
+    int count;
+    string name = "";
+    string message = "";
+
+    void Inc() => count++;
+    void Submit() => message = string.IsNullOrWhiteSpace(name) ? "Please enter a name." : $"Hello, {name}!";
+}
+</code></pre>
+
+<h2>3. Build for static hosting</h2>
+<pre><code>dotnet publish -c Release -o publish</code></pre>
+
+<h2>4. Run locally again</h2>
+<pre><code>dotnet run</code></pre>
+
+<h2>5. Deploy</h2>
+<p>Push to the repository. GitHub Actions will publish to Pages automatically.</p>
+
+<h2>Checks</h2>
+<ul>
+  <li><code>/counter</code> increments instantly</li>
+  <li>Form echoes the name</li>
+  <li>Live site loads at <a href="https://kawrae.github.io/blazor-demo/" target="_blank">https://kawrae.github.io/blazor-demo/</a></li>
+</ul>
+
+<p>Next: See <a href="/references">References</a> and the <a href="/slides">Slides</a>.</p>
