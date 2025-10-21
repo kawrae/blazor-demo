@@ -1,18 +1,25 @@
 @page "/references"
+<PageTitle>References & Cheat Sheet</PageTitle>
 
-<h1>References</h1>
-<ol>
-  <li>Microsoft Docs. Blazor hosting models.</li>
-  <li>Microsoft Learn. Razor components in Blazor.</li>
-  <li>.NET Blog. Blazor in .NET 8: Unifying Server and WebAssembly.</li>
-  <li>Microsoft Customer Stories. Blazor for enterprise internal dashboards.</li>
-</ol>
+<div class="container-narrow">
+    <h1>References (CTR Harvard)</h1>
+    <ol class="card">
+        <li>Microsoft (2024) <em>Blazor hosting models</em>. Available at: https://learn.microsoft.com/… (Accessed: 20
+            October 2025).</li>
+        <li>Microsoft (2024) <em>Razor components in Blazor</em>. Available at: https://learn.microsoft.com/… (Accessed:
+            20 October 2025).</li>
+        <li>Roth, D. (2023) ‘Blazor in .NET 8: Unifying Server and WebAssembly’, <em>.NET Blog</em>. Available at:
+            https://devblogs.microsoft.com/… (Accessed: 20 October 2025).</li>
+    </ol>
 
-<h2>Cheat Sheet</h2>
-<ul>
-  <li>Run: <code>dotnet run</code></li>
-  <li>Publish: <code>dotnet publish -c Release -o publish</code></li>
-  <li>Route a page: <code>@@page "/path"</code> at top of <code>.razor</code></li>
-  <li>Two-way bind: <code>@@bind="value"</code></li>
-  <li>Event handler: <code>@@onclick="Handler"</code></li>
-</ul>
+    <h2>Cheat Sheet</h2>
+    <div class="card">
+        <ul class="mb-0">
+            <li>Run: <code>dotnet run</code></li>
+            <li>Publish: <code>dotnet publish -c Release -o publish</code></li>
+            <li>Route a page: <code>@@page "/path"</code> at the top of <code>.razor</code></li>
+            <li>Two-way bind: <code>@@bind-Value="value"</code></li>
+            <li>Event handler: <code>@@onclick="Handler"</code></li>
+        </ul>
+    </div>
+</div>

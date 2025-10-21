@@ -1,60 +1,70 @@
 @page "/tutorial"
+@using System.ComponentModel.DataAnnotations
 
-<h1>Blazor Tutorial</h1>
+<PageTitle>Blazor Tutorial</PageTitle>
 
-<h2>Prerequisites</h2>
-<ul>
-  <li>.NET 8 SDK</li>
-  <li>GitHub account</li>
-</ul>
+<div class="container-narrow">
+  <h1>Blazor Tutorial</h1>
+  <p class="text-muted">Target time: ~45–60 minutes. You’ll create a WASM app, add a form, and deploy to GitHub Pages.
+  </p>
 
-<h2>1. Create the app</h2>
-<pre><code>dotnet new blazorwasm -n BlazorDemo -f net8.0
+  <div class="card">
+    <h3>Prerequisites</h3>
+    <ul class="mb-0">
+      <li>.NET 8 SDK</li>
+      <li>GitHub account</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>1) Create & run the app</h3>
+    <div class="code-block">
+      <pre><code>dotnet new blazorwasm -n BlazorDemo -f net8.0
 cd BlazorDemo
-dotnet run
-</code></pre>
+dotnet run</code></pre>
+    </div>
+    <p>Browse <kbd>https://localhost:5001</kbd> and verify the template loads.</p>
+  </div>
 
-<h2>2. Edit a component</h2>
-<p>Open <code>Pages/Counter.razor</code> and replace its contents:</p>
-<pre><code>@@page "/counter"
+  <div class="card">
+    <h3>2) Add a form with validation</h3>
+    <p>Open <code>Pages/Counter.razor</code> and replace with:</p>
+    <div class="code-block">
+      <pre><code>@@page "/counter"
 
-<h1>Counter</h1>
+&lt;h1&gt;Counter&lt;/h1&gt;
 
-<p>Current count: @count</p>
-<button @onclick="Inc">Click me</button>
+&lt;EditForm Model="@model" OnValidSubmit="Submit"&gt;
+  &lt;DataAnnotationsValidator /&gt;
+  &lt;ValidationSummary /&gt;
 
-<hr />
+  &lt;div class="mb-3"&gt;
+    &lt;label class="form-label"&gt;Name&lt;/label&gt;
+    &lt;InputText class="form-control" @@bind-Value="model.Name" /&gt;
+  &lt;/div&gt;
 
-<h2>Mini Form</h2>
-<input @bind="name" placeholder="Enter your name" />
-<button @onclick="Submit">Submit</button>
-<p>@message</p>
+  &lt;button class="btn btn-brand" type="submit"&gt;Submit&lt;/button&gt;
+&lt;/EditForm&gt;
 
 @code {
-    int count;
-    string name = "";
-    string message = "";
+    MyModel model = new();
 
-    void Inc() => count++;
-    void Submit() => message = string.IsNullOrWhiteSpace(name) ? "Please enter a name." : $"Hello, {name}!";
+    void Submit() { /* handle */ }
+
+    class MyModel { [Required] public string? Name { get; set; } }
 }
 </code></pre>
+    </div>
+  </div>
 
-<h2>3. Build for static hosting</h2>
-<pre><code>dotnet publish -c Release -o publish</code></pre>
+  <div class="card">
+    <h3>3) Deploy to GitHub Pages</h3>
+    <p>Publish and push using the provided workflow (see <code>deploy.yml</code>).</p>
+    <div class="code-block">
+      <pre><code>dotnet publish -c Release -o publish
+# Commit & push; GH Actions will build and deploy</code></pre>
+    </div>
+  </div>
 
-<h2>4. Run locally again</h2>
-<pre><code>dotnet run</code></pre>
-
-<h2>5. Deploy</h2>
-<p>Push to the repository. GitHub Actions will publish to Pages automatically.</p>
-
-<h2>Checks</h2>
-<ul>
-  <li><code>/counter</code> increments instantly</li>
-  <li>Form echoes the name</li>
-  <li>Live site loads at <a href="https://kawrae.github.io/blazor-demo/" target="_blank">https://kawrae.github.io/blazor-demo/</a></li>
-</ul>
-
-<p>Next: See <a href="references">References</a> and the <a href="slides" target="_blank">Slides</a>.</p>
-
+  <p class="text-muted">Tip: Add screenshots of each step (build, run, live site) to score highly on clarity.</p>
+</div>

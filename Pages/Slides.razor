@@ -1,9 +1,11 @@
 @page "/slides"
-@inject NavigationManager Nav
 
-@code {
-    protected override void OnInitialized()
-    {
-        Nav.NavigateTo("slides/Group-G-Presentation.pdf", true);
-    }
-}
+<div class="container-narrow">
+    <h1>Slides</h1>
+    <div class="card">
+        <object data="slides/Group-G-Presentation.pdf#view=FitH" type="application/pdf" width="100%" height="700">
+            <p>Can’t display the PDF here. <a href="slides/Group-G-Presentation.pdf" target="_blank" rel="noopener">Open
+                    in a new tab</a>.</p>
+        </object>
+    </div>
+</div>
