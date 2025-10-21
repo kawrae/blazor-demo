@@ -30,9 +30,12 @@ jobs:
         run: |
           dotnet restore
           dotnet publish -c Release -o publish
-          # auto-set <base href> to repository name on GitHub Pages
           REPO_NAME="${GITHUB_REPOSITORY##*/}"
           sed -i "s|<base href=\"/\" />|<base href=\"/${REPO_NAME}/\" />|" publish/wwwroot/index.html
+
+      # REQUIRED for Pages in some repos
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
