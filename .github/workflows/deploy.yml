@@ -33,7 +33,6 @@ jobs:
           REPO_NAME="${GITHUB_REPOSITORY##*/}"
           sed -i "s|<base href=\"/\" />|<base href=\"/${REPO_NAME}/\" />|" publish/wwwroot/index.html
 
-      # REQUIRED for Pages in some repos
       - name: Configure Pages
         uses: actions/configure-pages@v5
 
