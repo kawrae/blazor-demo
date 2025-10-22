@@ -26,48 +26,113 @@
 cd BlazorDemo
 dotnet run</code></pre>
     </div>
-    <p>Browse <kbd>https://localhost:5001</kbd> and verify the template loads.</p>
+    <br /><p>Browse <kbd>https://localhost:5001</kbd> and verify the template loads.</p>
   </div>
 
   <div class="card">
-    <h3>2) Add a form with validation</h3>
-    <p>Open <code>Pages/Counter.razor</code> and replace with:</p>
+    <h3>2) Add Dependencies</h3>
+    <p>
+      Before we can add validation to our form, we need to make sure the
+      <code>DataAnnotations</code> namespace is available across our Blazor project.
+      This namespace provides attributes such as <code>[Required]</code> and
+      <code>[StringLength]</code>, which we’ll use to validate user input.
+    </p>
+    <p>
+      Open the <code>_Imports.razor</code> file located in your project root, and add
+      the following line:
+    </p>
     <div class="code-block">
-      <pre><code>@@page "/counter"
+      <pre><code>&#64;using System.ComponentModel.DataAnnotations</code></pre>
+    </div>
+    <br /><p>
+      Save the file, rebuild, and verify that your app still runs at
+      <kbd>https://localhost:5001</kbd>.
+      This ensures your project is ready to handle validation in the next step.
+    </p>
+  </div>
+
+  <div class="card">
+    <h3>3a) Add the form markup</h3>
+    <p>Open <code>Pages/Counter.razor</code> and add the page header and form: </p>
+    <div class="code-block">
+      <pre><code>&#64;page "/counter"
 
 &lt;h1&gt;Counter&lt;/h1&gt;
 
-&lt;EditForm Model="@model" OnValidSubmit="Submit"&gt;
+&lt;p role="status"&gt;Current count: &#64;currentCount&lt;/p&gt;
+&lt;button class="btn btn-primary" &#64;onclick="IncrementCount"&gt;Click me&lt;/button&gt;&lt;br /&gt;&lt;br /&gt;
+
+&lt;EditForm Model="&#64;model" OnValidSubmit="Submit"&gt;
   &lt;DataAnnotationsValidator /&gt;
-  &lt;ValidationSummary /&gt;
 
   &lt;div class="mb-3"&gt;
     &lt;label class="form-label"&gt;Name&lt;/label&gt;
-    &lt;InputText class="form-control" @@bind-Value="model.Name" /&gt;
+    &lt;InputText class="form-control" &#64;bind-Value="model.Name" /&gt;
+    &lt;ValidationMessage For="() =&gt; model.Name" /&gt;
   &lt;/div&gt;
 
-  &lt;button class="btn btn-brand" type="submit"&gt;Submit&lt;/button&gt;
+  &lt;button class="btn btn-primary" type="submit"&gt;Submit&lt;/button&gt;
 &lt;/EditForm&gt;
+</code></pre>
+    </div>
+      <br /><p>Don't worry if there are errors right now, once you complete the next steps it will work!</p>
+  </div>
 
-@code {
-      MyModel model = new();
-
-      void Submit() { /* handle */ }
-
-      class MyModel { [Required] public string? Name { get; set; } }
+  <div class="card">
+    <h3>3b) Show a confirmation message</h3>
+    <p>Display a greeting after a successful submit:</p>
+    <div class="code-block">
+      <pre><code>&#64;if (!string.IsNullOrWhiteSpace(submittedName))
+{
+  &lt;br /&gt;&lt;div class="alert alert-success"&gt;Hello, &#64;submittedName!&lt;/div&gt;
 }
 </code></pre>
     </div>
   </div>
 
   <div class="card">
-    <h3>3) Deploy to GitHub Pages</h3>
-    <p>Publish and push using the provided workflow (see <code>deploy.yml</code>).</p>
+    <h3>3c) Add the backing code</h3>
+    <p>Add state, validation model, and handlers:</p>
     <div class="code-block">
-      <pre><code>dotnet publish -c Release -o publish
-# Commit & push; GH Actions will build and deploy</code></pre>
+      <pre><code>&#64;code {
+  private int currentCount = 0;
+  private MyModel model = new();
+  private string? submittedName;
+
+  private void IncrementCount() =&gt; currentCount++;
+  private void Submit() =&gt; submittedName = model.Name;
+
+  public class MyModel
+  {
+    [Required]
+    [StringLength(50)]
+    public string Name { get; set; } = "";
+  }
+}
+</code></pre>
     </div>
+    <br /><p>Save your work, rebuild the app, and test the form in the browser to confirm that the submitted name is displayed back to you. With validation and basic event handling now in place, you're ready to move on to the deployment stage.</p>
   </div>
 
-  <p class="text-muted">Tip: Add screenshots of each step (build, run, live site) to score highly on clarity.</p>
+<div class="card">
+  <h3>4) Deploy to GitHub Pages</h3>
+  <p>
+    Once you have the form working locally, you can deploy the Blazor app so it becomes 
+    publicly accessible. The provided GitHub Actions workflow (<code>deploy.yml</code>) 
+    will automatically build and publish the project for GitHub Pages.
+  </p>
+
+  <p>From the project root, run:</p>
+  <div class="code-block">
+    <pre><code>dotnet publish -c Release -o publish</code></pre>
+  </div>
+
+  <br /><p>
+    After publishing, commit your changes and push to GitHub.  
+    The GitHub Action will build the project and deploy the artefacts to the 
+    <code>gh-pages</code> branch. Your site will then be available under your GitHub Pages URL.
+  </p>
+
+  <p class="text-muted"><em>Tip:</em> Show screenshots of the build, publish folder, workflow run, and the final site to score higher for presentation clarity.</p>
+</div>
 </div>
