@@ -19,7 +19,8 @@
 
   <div class="card">
     <h3>1) Create & run the app</h3>
-    <p>Open the terminal of your preferred coding environment, such as <vscode>Visual Studio Code</vscode>. And enter:</p>
+    <p>Open the terminal of your preferred coding environment, such as <vscode>Visual Studio Code</vscode>. And enter:
+    </p>
     <div class="code-block">
       <pre><code>dotnet new blazorwasm -n BlazorDemo -f net8.0
 cd BlazorDemo
@@ -49,11 +50,11 @@ dotnet run</code></pre>
 &lt;/EditForm&gt;
 
 @code {
-    MyModel model = new();
+      MyModel model = new();
 
-    void Submit() { /* handle */ }
+      void Submit() { /* handle */ }
 
-    class MyModel { [Required] public string? Name { get; set; } }
+      class MyModel { [Required] public string? Name { get; set; } }
 }
 </code></pre>
     </div>
