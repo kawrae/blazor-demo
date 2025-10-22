@@ -121,7 +121,54 @@ dotnet run</code></pre>
   </div>
 
   <div class="card">
-    <h3>4a) Create the GitHub Actions workflow</h3>
+    <h3>4a) Initialise Git and prepare the project for publishing</h3>
+    <p>
+      To deploy the app using GitHub Pages, the project must be stored in a Git repository.
+      We will now initialise Git locally, add a <code>.gitignore</code>, and make the first commit.
+    </p>
+
+    <p>From the project root (<code>BlazorDemo/</code>), run:</p>
+    <div class="code-block">
+      <pre><code>git init
+git add .
+git commit -m "Initial commit"</code></pre>
+    </div>
+
+    <p>
+      Before pushing to GitHub, create a <code>.gitignore</code> file to exclude build artefacts such as
+      <code>/bin</code>, <code>/obj</code>, and user-specific files.
+      A typical .NET <code>.gitignore</code> looks like this:
+    </p>
+
+    <div class="code-block">
+      <pre><code>bin/
+obj/
+*.user
+*.swp
+*.DS_Store</code></pre>
+    </div>
+
+    <p>Optionally, you can also add a <code>LICENSE</code> file (e.g., MIT or Unlicense) if you intend to make the
+      project open source.</p>
+
+    <p>
+      Next, create a new GitHub repository (without adding a README or .gitignore online) and link it to your local
+      repo:
+    </p>
+
+    <div class="code-block">
+      <pre><code>git remote add origin https://github.com/&lt;your-username&gt;/blazor-demo.git
+git branch -M main
+git push -u origin main</code></pre>
+    </div>
+
+    <p>
+      Once your repository is pushed, you're ready to continue by adding the deployment workflow.
+    </p>
+  </div>
+
+  <div class="card">
+    <h3>4b) Create the GitHub Actions workflow</h3>
     <p>
       To enable automatic deployment, we first need to create a GitHub Actions workflow.
       This file tells GitHub how to build and publish your Blazor app when changes are pushed.
@@ -156,7 +203,7 @@ dotnet run</code></pre>
   </div>
 
   <div class="card">
-    <h3>4b) Add the workflow file</h3>
+    <h3>4c) Add the workflow file</h3>
     <p>
       Open <code>.github/workflows/deploy.yml</code> and paste the following workflow. It builds your Blazor WASM app,
       fixes the <code>&lt;base href&gt;</code> for GitHub Pages, uploads the build as an artifact, and deploys it to
@@ -220,7 +267,8 @@ jobs:
 </code></pre>
     </div>
 
-    <br /><p>
+    <br />
+    <p>
       Commit the new file and push to <code>main</code>. In your repo settings, set <strong>Pages → Source</strong> to
       <em>GitHub Actions</em>. After the workflow runs, your site will be live at the URL shown in the run summary.
     </p>
@@ -231,4 +279,34 @@ jobs:
     </p>
   </div>
 
+  <div class="card">
+    <h3>5) Summary & Next Steps</h3>
+    <p>
+      Congratulations — your Blazor WebAssembly app is now live on GitHub Pages! 🎉
+      You’ve successfully:
+    </p>
+
+    <ul>
+      <li>Created a Blazor WASM project using <code>dotnet new</code></li>
+      <li>Added validation with <code>DataAnnotations</code></li>
+      <li>Built a working form that submits and renders user input</li>
+      <li>Initialised a Git repository and published it to GitHub</li>
+      <li>Configured a CI/CD pipeline using GitHub Actions</li>
+      <li>Deployed the final build to GitHub Pages</li>
+    </ul>
+
+    <p>
+      Your project is now hosted at your GitHub Pages URL.
+    </p>
+
+    <div class="code-block">
+      <pre><code>https://&lt;your-username&gt;.github.io/blazor-demo/</code></pre>
+    </div>
+
+    <br /><p>
+      You can share this URL with others, or include it in documentation, your portfolio, or coursework submission.
+      Any future changes you push to <code>main</code> will automatically trigger a new deployment.
+    </p>
+
+  </div>
 </div>
